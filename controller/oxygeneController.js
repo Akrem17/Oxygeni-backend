@@ -53,6 +53,11 @@ exports.getAllOxygenes=async(req,res)=>{
 exports.getOxygenByVilleAndRegion= async (req, res) => {
 
   try {
+          //pagination default 1
+          const page = req.query.page * 1 || 1;
+          const limit = req.query.limit * 1 || 5
+          const skip = (page - 1) * limit
+     
       var region=req.params.region;
       var ville =req.params.city;
       console.log(region)
@@ -75,10 +80,15 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
         $match : { region : region,ville:ville }
     
       }
-    ])
-      if (!docs)throw 'no document found';
+    ]).skip(skip).limit(limit);
+    const total = await oxygene.countDocuments();
+
+    if (total==0) throw 'no documents found';
+
+
   
       res.status(200).json({
+        total:total,
         status: 'success',
         data: {
           docs,
