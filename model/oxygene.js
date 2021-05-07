@@ -19,9 +19,9 @@ const oxygeneSchema=mongoose.Schema({
 
     } ,
     quantite:{
-        type:String,
-        required:true
+        type:String
 
+        
     } ,
     
     prix:{

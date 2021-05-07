@@ -82,8 +82,8 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
       }
     ]).skip(skip).limit(limit);
 
-    const total =  await docs.length
-    if (total==0) throw 'no documents found';
+    const total =  await docs.length;
+    //if (total==0) throw 'no documents found';
 
 
   
@@ -134,7 +134,7 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
       const total =  await docs.length
       
   
-      if (total==0) throw 'no documents found';
+     // if (total==0) throw 'no documents found';
   
   
     
