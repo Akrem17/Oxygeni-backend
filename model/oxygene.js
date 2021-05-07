@@ -24,6 +24,11 @@ const oxygeneSchema=mongoose.Schema({
 
     } ,
     
+    prix:{
+        type:String,
+
+    } ,
+    
     user:{
         type:mongoose.Types.ObjectId,
         ref:'Users'
