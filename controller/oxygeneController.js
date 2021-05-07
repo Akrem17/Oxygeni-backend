@@ -82,21 +82,7 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
       }
     ]).skip(skip).limit(limit);
 
-    const total =  await user.aggregate([
-      { $lookup:
-          {
-             from: "oxygenes",
-             localField: "_id",
-             foreignField: "user",
-             as: "oxygenes"
-          }
-        },{
-      $match : { region : region,ville:ville }
-  
-    }
-  ]).countDocuments();
- 
-
+    const total =  await docs.length
     if (total==0) throw 'no documents found';
 
 
