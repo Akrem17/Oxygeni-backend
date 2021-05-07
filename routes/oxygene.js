@@ -6,7 +6,8 @@ var oxygeneController=require('../controller/oxygeneController')
 router.route('/')
 .get(oxygeneController.getAllOxygenes)
 .post(oxygeneController.createOxygene);
-
+router.route('/:region')
+.get(oxygeneController.getOxygenByRegion)
 router.route('/:region/:city')
 .get(oxygeneController.getOxygenByVilleAndRegion)
 module.exports = router;
