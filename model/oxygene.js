@@ -28,6 +28,20 @@ const oxygeneSchema=mongoose.Schema({
         type:String,
 
     } ,
+
+    tel:{
+        type:String,
+     
+
+    } ,
+    region:{
+        type:String,
+
+    },
+    ville:{
+        type:String,
+
+    },
     
     user:{
         type:mongoose.Types.ObjectId,

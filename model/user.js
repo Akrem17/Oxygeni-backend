@@ -11,21 +11,7 @@ const userSchema=mongoose.Schema({
     prenom:{
         type:String,
         
-    },
-    //the name of the 'canton'
-    tel:{
-        type:String,
-        required:true
-
-    } ,email:{
-        type:String,
-
-    },
-    region:{
-        type:String,
-
-    },
-    ville:{
+    },email:{
         type:String,
 
     },

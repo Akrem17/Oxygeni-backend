@@ -6,7 +6,7 @@ var loginController=require('../controller/loginController')
 /* GET users listing. */
 
 router.route('/')
-.get(loginController.verifyToken,oxygeneController.getAllOxygenes)
+.get(oxygeneController.getAllOxygenes)
 .post(loginController.verifyToken,oxygeneController.createOxygene);
 router.route('/:region')
 .get(oxygeneController.getOxygenByRegion)

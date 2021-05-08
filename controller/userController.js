@@ -48,12 +48,12 @@ exports.getAllUsers=async(req,res)=>{
 
     }
 
-}/* 
-exports.getOneUser= async (req, res) => {
+}
+exports.getUserById= async (req, res) => {
 
   try {
-
-      const docs = await user.findOne({codeCirconscriptions:req.params.codeCirconscri});
+      console.log(req.body.id)
+      const docs = await user.findById(req.params.id)
       if (!docs)throw 'no document found';
   
       res.status(200).json({
@@ -69,7 +69,7 @@ exports.getOneUser= async (req, res) => {
       });
     }
   };
-
+/*
 
   exports.getMultipleCircByCode= async (req, res) => {
 

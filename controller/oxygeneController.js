@@ -71,7 +71,7 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
 .then(user => {
    res.json(user); 
 }); */
-      const docs =  await user.aggregate([
+    /*   const docs =  await user.aggregate([
         { $lookup:
             {
                from: "oxygenes",
@@ -84,7 +84,9 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
     
       }
     ]).skip(skip).limit(limit);
+ */
 
+    const docs =  await oxygene.find({region: region,ville:ville }).skip(skip).limit(limit);
     const total =  await docs.length;
     //if (total==0) throw 'no documents found';
 
@@ -113,7 +115,7 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
             const limit = req.query.limit * 1 || 5
             const skip = (page - 1) * limit
 
-        var region=req.params.region;
+       /*  var region=req.params.region;
         region= region.charAt(0).toUpperCase() + region.slice(1);
 
         console.log(region)
@@ -132,9 +134,10 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
       
         }
       ]).skip(skip).limit(limit);
-
+ */
+      const docs =  await oxygene.find({region: req.params.region}).skip(skip).limit(limit);
     
-      const total =  await docs.length
+      const total =  await docs.length;
       
   
      // if (total==0) throw 'no documents found';
