@@ -28,8 +28,23 @@ const userSchema=mongoose.Schema({
     ville:{
         type:String,
 
-    }
-},
+    },
+    password:{
+        type:String,
+        required:[true,'please provide a password'],
+        select:false
+    },
+    passwordConfirm:{
+        type:String,
+        required:[true,"please provide a confirm password"],
+        validate:{
+            validator:function(el){
+                return el===this.password
+            },
+            message:"passwords are not the same "
+            
+        }}
+}
 
 )
 

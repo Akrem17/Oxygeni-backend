@@ -1,5 +1,6 @@
 const oxygene = require('../model/oxygene');
 const user = require('../model/user');
+const jwt=require("jsonwebtoken");
 
 exports.createOxygene = async (req, res) => {
   try {
@@ -27,6 +28,7 @@ exports.getAllOxygenes=async(req,res)=>{
      const page = req.query.page * 1 || 1;
      const limit = req.query.limit * 1 || 5
      const skip = (page - 1) * limit
+     const userAuth=req.authData||null
 
         const doc= await oxygene.find({}).skip(skip).limit(limit);
         const total = await oxygene.countDocuments();
@@ -36,6 +38,7 @@ exports.getAllOxygenes=async(req,res)=>{
   
         res.status(200).json({
           total:total,
+          userAuth,
             status: 'success',
             data: {
               doc,
