@@ -6,14 +6,14 @@ exports.signup = async (req, res) => {
      
         const {nom,prenom,email,password,passwordConfirm} = req.body
         // check if email and password exist
-        if(! email && !password){throw 'please provide email and password'}
+        if(! email && !password){throw 'Saisir email et mot de passe'}
         //check if user exists && and password is correct
 
-        if(! email && !password){throw 'please provide email and password'}
         const emailverif = await USER.findOne({email});
 
         if(emailverif){throw 'Email exists'}
 
+        if(password !=passwordConfirm) {throw "Mot de passe ne confirme "}
         //crypt password
 
 

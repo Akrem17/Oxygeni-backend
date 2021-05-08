@@ -28,13 +28,27 @@ exports.getAllOxygenes=async(req,res)=>{
      const page = req.query.page * 1 || 1;
      const limit = req.query.limit * 1 || 5
      const skip = (page - 1) * limit
+     const tel=req.query.tel||null
+     const capacite=req.query.capacite||null
+     const region=req.query.region||null
+     const ville=req.query.ville||null
+
      const userAuth=req.authData||null
+      
+     if(tel,capacite,region,ville){
 
-        const doc= await oxygene.find({}).skip(skip).limit(limit);
-        const total = await oxygene.countDocuments();
+      var doc= await oxygene.find({tel,capacite,region,ville}).skip(skip).limit(limit);
+      var total = doc.length
 
-        if (total==0) throw 'no documents found';
+     }else{
+       doc= await oxygene.find({}).skip(skip).limit(limit);
+       const total = await oxygene.countDocuments();
 
+
+
+     }
+
+     if (total==0) throw 'no documents found';
   
         res.status(200).json({
           total:total,
@@ -53,6 +67,8 @@ exports.getAllOxygenes=async(req,res)=>{
     }
 
 }
+
+
 exports.getOxygenByVilleAndRegion= async (req, res) => {
 
   try {

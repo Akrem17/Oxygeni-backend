@@ -7,13 +7,13 @@ exports.login = async (req, res) => {
      
         const {email,password} = req.body
         // check if email and password exist
-        if(! email && !password){throw 'please provide email and password'}
+        if(! email && !password){throw 'Saisir email et mot de passe '}
         //check if user exists && and password is correct
         const user = await USER.findOne({email}).select("+password");
 
 
         if(!user || password!=user.password){
-            throw 'incorrect email or password !'
+            throw 'email ou mot de passe incorrect !'
          }
         console.log(user);
         
