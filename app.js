@@ -15,6 +15,7 @@ var usersRouter = require('./routes/users');
 var oxygeneRouter = require('./routes/oxygene');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
+var mailRouter = require('./routes/mail');
 
 var app = express();
 app.use(function(req, res, next) {
@@ -39,7 +40,7 @@ app.use('/users', usersRouter);
 app.use('/oxygenes',oxygeneRouter );
 app.use('/login',loginRouter);
 app.use('/signup',signupRouter);
-
+app.use('/mail',mailRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
