@@ -69,6 +69,114 @@ exports.getAllOxygenes=async(req,res)=>{
 }
 
 
+
+exports.updateOxygen=async(req,res)=>{
+
+try{
+console.log(req.params.id)
+const userAuth=req.authData||null
+
+
+
+var doc= await oxygene.findByIdAndUpdate(req.params.id,req.body);
+
+
+
+
+console.log(!doc)
+
+if (!doc) throw 'no documents found';
+
+res.status(200).json({
+
+ userAuth,
+   status: 'success',
+   
+     doc,
+   
+ });
+} catch (err) {
+ res.status(400).json({
+   status: 'fail',
+   message: err,
+ });
+
+}
+
+}
+
+exports.getOxygenById=async(req,res)=>{
+
+try{
+console.log(req.params.id)
+const userAuth=req.authData||null
+
+
+
+var doc= await oxygene.findById(req.params.id)
+
+
+
+
+console.log(!doc)
+
+if (!doc) throw 'no documents found';
+
+res.status(200).json({
+
+ userAuth,
+   status: 'success',
+   
+     doc,
+   
+ });
+} catch (err) {
+ res.status(400).json({
+   status: 'fail',
+   message: err,
+ });
+
+}
+
+}
+
+
+exports.getAllOxygenesOfUser=async(req,res)=>{
+
+
+  try{
+         //pagination default 1
+   const page = req.query.page * 1 || 1;
+   const limit = req.query.limit * 1 || 5
+   const skip = (page - 1) * limit
+
+   const userAuth=req.authData||null
+    
+    const user=req.params.id;
+     const doc= await oxygene.find({user}).skip(skip).limit(limit);
+     const total = doc.length
+
+   if (total==0) throw 'no documents found';
+
+      res.status(200).json({
+        total:total,
+        userAuth,
+          status: 'success',
+          data: {
+            doc,
+          },
+        });
+      } catch (err) {
+        res.status(400).json({
+          status: 'fail',
+          message: err,
+        });
+
+  }
+
+}
+
+
 exports.getOxygenByVilleAndRegion= async (req, res) => {
 
   try {
@@ -175,6 +283,28 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
       }
     };
   
+
+
+    exports.deleteOxygenById =  async (req, res) => {
+      try {
+        const doc = await oxygene.findByIdAndDelete(req.params.id);
+        if (!doc) {
+          throw 'no document found with this id';
+        }
+    
+        res.status(204).json({
+          status: 'success',
+          message: 'doc deleted !',
+        });
+      } catch (err) {
+        res.status(400).json({
+          status: 'fail',
+          message: err,
+        });
+      }
+    }; 
+
+
 
 /*
   exports.getMultipleCircByCode= async (req, res) => {
