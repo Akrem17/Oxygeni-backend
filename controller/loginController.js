@@ -16,13 +16,15 @@ exports.login = async (req, res) => {
             throw 'email ou mot de passe incorrect !'
          }
         console.log(user);
+         user2={"_id":user._id,"nom":user.nom,"prenom":user.prenom,"email":user.email}
         
-        
-        var token =jwt.sign({user},"mysecretkey",(err,token)=>{
 
+        console.log(user2);
+        var token =jwt.sign({user2},"mysecretkey",(err,token)=>{
+            
             res.json({
                 token,
-                user
+                user:user2
             })
         })
                       

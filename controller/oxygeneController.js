@@ -147,14 +147,14 @@ exports.getAllOxygenesOfUser=async(req,res)=>{
   try{
          //pagination default 1
    const page = req.query.page * 1 || 1;
-   const limit = req.query.limit * 1 || 5
+   const limit = req.query.limit * 1 || 10
    const skip = (page - 1) * limit
 
    const userAuth=req.authData||null
     
     const user=req.params.id;
      const doc= await oxygene.find({user}).skip(skip).limit(limit);
-     const total = doc.length
+     const total = await oxygene.find({user}).countDocuments()
 
    if (total==0) throw 'no documents found';
 
@@ -182,7 +182,7 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
   try {
           //pagination default 1
           const page = req.query.page * 1 || 1;
-          const limit = req.query.limit * 1 || 5
+          const limit = req.query.limit * 1 || 10
           const skip = (page - 1) * limit
      
       var region=req.params.region;
@@ -211,7 +211,7 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
  */
 
     const docs =  await oxygene.find({region: region,ville:ville }).skip(skip).limit(limit);
-    const total =  await docs.length;
+    const total =  await oxygene.find({region: region,ville:ville }).countDocuments()
     //if (total==0) throw 'no documents found';
 
 
@@ -236,7 +236,7 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
     try {
             //pagination default 1
             const page = req.query.page * 1 || 1;
-            const limit = req.query.limit * 1 || 5
+            const limit = req.query.limit * 1 || 10
             const skip = (page - 1) * limit
 
        /*  var region=req.params.region;
@@ -261,8 +261,8 @@ exports.getOxygenByVilleAndRegion= async (req, res) => {
  */
       const docs =  await oxygene.find({region: req.params.region}).skip(skip).limit(limit);
     
-      const total =  await docs.length;
-      
+      const total =  await oxygene.find({region: req.params.region}).countDocuments();
+        console.log(total)
   
      // if (total==0) throw 'no documents found';
   
