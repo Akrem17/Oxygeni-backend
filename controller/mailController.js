@@ -19,13 +19,13 @@ exports.sendmail=async(req,res)=>{
               filename: 'attachment2.pdf',
               contentType: 'application/pdf' } 
           ]; */
-          
+          //message ="email = "+req.body.email+"nom= "+req.body.nom+" tel = "+req.body.tel+" message = "+req.body.message;
           client.send({
             from : 'akrem.hammami170498@gmail.com',
-            fromName : 'Sender',
-            subject : 'Subject',
-            msgTo: [ 'akrem@gmx.us' ],
-            bodyHtml: '<h1>Hello World</h1>',
+            fromName : 'Oxygeni',
+            subject : 'Oxygeni contact',
+            msgTo: [ 'akremhammami@outlook.com' ],
+            bodyHtml: `<h1>From : ${req.body.email} </h1><br> Nom : ${req.body.nom}<br> Tel: ${req.body.tel} <br> Message : ${req.body.message}<br> `,
             textHtml: 'Hello World'
           }).then(console.log);
           
@@ -33,18 +33,7 @@ exports.sendmail=async(req,res)=>{
           // {"success":true,"data":{"transactionid":"190d1b03-8b01-41a1-8003-17181c1719b0","messageid":"ilXf1Nm38mxuxemecfdbvw2"}}
           
           // You can also set default options, for example having the same from and the name of the sender
-          // the function below is the same as the client.send above
-          client.setConfig({
-            from : 'akrem.hammami170498@gmail.com',
-            fromName : 'Sender'
-          });
-          client.send({
-            subject : 'Subject',
-            msgTo: [ 'akrem@gmx.us' ],
-            msgCC: [ 'cc_1@domain.com', 'cc_2@domain.com' ],
-            bodyHtml: '<h1>Hello World</h1>',
-            textHtml: 'Hello World'
-          }).then(console.log);
+ 
         res.status(200).json({
 
         
