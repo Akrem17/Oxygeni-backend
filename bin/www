@@ -4,7 +4,7 @@
  * Module dependencies.
  */
  const mongoose = require('mongoose')
-const ev= require('dotenv').config()
+const env= require('dotenv').config()
 
 var app = require('../app');
 var debug = require('debug')('backend:server');
