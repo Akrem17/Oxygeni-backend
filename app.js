@@ -16,6 +16,7 @@ var oxygeneRouter = require('./routes/oxygene');
 var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
 var mailRouter = require('./routes/mail');
+var forgetpasswordRouter = require('./routes/forgetpassword');
 
 var app = express();
 app.use(function(req, res, next) {
@@ -41,6 +42,8 @@ app.use('/oxygenes',oxygeneRouter );
 app.use('/login',loginRouter);
 app.use('/signup',signupRouter);
 app.use('/mail',mailRouter);
+app.use('/forgetpassword',forgetpasswordRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
