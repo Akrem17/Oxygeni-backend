@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
 
         if(emailverif){throw 'Email exists'}
 
-        if(password !=passwordConfirm) {throw "Mot de passe ne confirme "}
+        if(password !=passwordConfirm) {throw "Le mot de passe n'est pas conforme "}
         //crypt password
 
 
