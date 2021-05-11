@@ -69,6 +69,28 @@ exports.getUserById= async (req, res) => {
       });
     }
   };
+
+  exports.updateById= async (req, res) => {
+
+    try {
+     
+        console.log(req.body)
+        const docs = await user.findByIdAndUpdate(req.params.id,req.body)
+        if (!docs)throw 'no document found';
+    
+        res.status(200).json({
+          status: 'success',
+          data: {
+            docs,
+          },
+        });
+      } catch (err) {
+        res.status(400).json({
+          status: 'fail',
+          message: err,
+        });
+      }
+    };
 /*
 
   exports.getMultipleCircByCode= async (req, res) => {

@@ -20,7 +20,7 @@ exports.forgetpassword = async (req, res) => {
           //  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
           var ref = req.header('Referer');
 
-            const link=ref+"forgetpassword/"+user._id+"/"+token;
+            const link=ref+"oxygeni-frontend/forgetpassword/"+user._id+"/"+token;
             req.body.link=link;
             mailController.sendmail(req,res)
             res.status(200)
@@ -34,50 +34,67 @@ exports.forgetpassword = async (req, res) => {
     
   
     } }
- 
+
+
+    exports.reset = async (req, res,next) => {
+        try {
+         
+            const {id,token} = req.params;
+            const {password,passwordConfirm}=req.body
+            if(password!=passwordConfirm) throw 'password ne confirme pas'
+
+            //check if user exists && and password is correct
+            const user = await USER.findById(id).select("+password");
+            if(!user) throw 'user not found'
+
+            const secret="mysecretkey"+user.password;
+            jwt.verify(token,secret,(err,data)=>{
+
+                if(err){
+
+                res.sendStatus(403); 
+                }else{
+                    console.log(data)
+                    req.params.id=id;
+                    user.password=password;
+                    user.passwordConfirm=passwordConfirm;
+                    req.body=user;
+               next();
+                }
+            })
+       
+          
+          
+        }catch(err){
+            console.log(err)
+            res.status(403).send({msg:err})
+        }}
+      
+ /* 
     exports.reset = async (req, res) => {
         try {
             
-            const {id,token} = req.params;
-            const {password,passwordConfirm}=req.body
 
-            if(password!=passwordConfirm) throw 'password ne confirme pas'
-            const user = await USER.findById(id).select("+password");
-            if(!user){throw 'User n exsite pas  '}
-
-
-            const secret="mysecretkey"+user.password
-            const payload = jwt.verify(token,secret,(err,data)=>{
+            console.
+                
+            const payload =  jwt.verify(token,secret,(err,data)=>{
                 if (err)  {res.sendStatus(403); }
                 else{
-                      try{
-                        const user =  USER.findByIdAndUpdate(id, {password,passwordConfirm})
-                        console.log({password,passwordConfirm})
-                        res.status(200).json({
-                            "message":"password updated"
-                        })
-                    }catch(err){
-                        res.status(401).json({"msg":err}); 
 
-                    }   
+                
                       }
                  
 
             })
          
 
-
-            
-
-            
-           
-
         }catch(err){
+            console.log("lena")
             res.status(403).send({msg:err})
         
       
         } }
-      
+       */
       
     /* 
 exports.verifyToken = async (req, res,next) => {
