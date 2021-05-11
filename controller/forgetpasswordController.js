@@ -52,7 +52,7 @@ exports.forgetpassword = async (req, res) => {
                 else{
                       try{
                         const user =  USER.findByIdAndUpdate(id, {password,passwordConfirm})
-
+                        console.log({password,passwordConfirm})
                         res.status(200).json({
                             "message":"password updated"
                         })
