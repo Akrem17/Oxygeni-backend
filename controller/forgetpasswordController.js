@@ -20,7 +20,7 @@ exports.forgetpassword = async (req, res) => {
           //  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
           var ref = req.header('Referer');
 
-            const link=ref+"oxygeni-frontend/forgetpassword/"+user._id+"/"+token;
+            const link=ref+"forgetpassword/"+user._id+"/"+token;
             req.body.link=link;
             mailController.sendmail(req,res)
             res.status(200)
