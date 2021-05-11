@@ -9,7 +9,23 @@ exports.sendmail=async(req,res)=>{
     try{
     
 
+      if(req.body.email && req.body.link){
+
+        client.send({
+          from : 'akrem.hammami170498@gmail.com',
+          fromName : 'Oxygeni',
+          subject : 'Reset mot de passe',
+          msgTo: [ req.body.email ],
+          bodyHtml: `<h1>Lien de reset mot de passe :</h1><br><div style="word-wrap: break-word;"><a href=${req.body.link}>${req.body.link}</a> </div>`,
+          textHtml: 'Hello World'
+        }).then(console.log);
+        
      
+      }else{
+
+
+      
+      
        /*  var attachments = [ 
             // CSV
             { data: 'id,name\n1,name_1',
@@ -33,13 +49,8 @@ exports.sendmail=async(req,res)=>{
           // {"success":true,"data":{"transactionid":"190d1b03-8b01-41a1-8003-17181c1719b0","messageid":"ilXf1Nm38mxuxemecfdbvw2"}}
           
           // You can also set default options, for example having the same from and the name of the sender
- 
-        res.status(200).json({
-
-        
-            status: 'success',
-        
-          });
+        }
+        res.status(200).json({"message":"success"})
         } catch (err) {
           res.status(400).json({
             status: 'fail',

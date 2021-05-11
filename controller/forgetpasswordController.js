@@ -1,14 +1,14 @@
 
 const jwt=require("jsonwebtoken");
 const USER = require('../model/user');
-
+var mailController = require("../controller/mailController");
 
 exports.forgetpassword = async (req, res) => {
     try {
      
         const {email} = req.body
        
-        const user = await USER.findOne({email});
+        const user = await USER.findOne({email}).select("+password");;
 
         if(!user){throw 'Email n existe pas '}
         const secret="mysecretkey"+user.password;
@@ -17,73 +17,62 @@ exports.forgetpassword = async (req, res) => {
             id:user._id
         }
         const token=jwt.sign(payload,secret,{expiresIn:'15m'},(err,token)=>{
-            var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-            const link=fullUrl+"/reset-password/"+user._id+"/"+token;
-            console.log(link)
-         
-            res.json({
-                link
-            })
+          //  var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+          var ref = req.header('Referer');
+
+            const link=ref+"forgetpassword/"+user._id+"/"+token;
+            req.body.link=link;
+            mailController.sendmail(req,res)
+            res.status(200)
 
 
         });
    
 
     }catch(err){
-        console.log(err)
         res.status(403).send({msg:err})
     
   
     } }
-  
-    exports.resetpassword = async (req, res) => {
-        try {
-         
-            const {id,token} = req.params;
-           
-            const user = await USER.findById(id)
-    
-            if(!user){throw 'User n exsite pas  '}
-
-
-            const secret="mysecretkey"+user.password
-            console.log(secret)
-            const payload = jwt.verify(token,secret,(err,data)=>{
-
-                if (err)  {res.sendStatus(403); }
-                else{
-                      
-                        res.status(200).json({data})
-                }   
-
-            })
-        }catch(err){
-            console.log(err)
-            res.status(403).send({msg:err})
-        
-      
-        } }
-        
+ 
     exports.reset = async (req, res) => {
         try {
-         
+            
             const {id,token} = req.params;
             const {password,passwordConfirm}=req.body
 
             if(password!=passwordConfirm) throw 'password ne confirme pas'
+            const user = await USER.findById(id).select("+password");
+            if(!user){throw 'User n exsite pas  '}
 
-         
-    
-   
 
-            const user = await USER.findByIdAndUpdate(id, {password,passwordConfirm})
-            
-            res.status(200).json({
-                "message":"password updated"
+            const secret="mysecretkey"+user.password
+            const payload = jwt.verify(token,secret,(err,data)=>{
+                if (err)  {res.sendStatus(403); }
+                else{
+                      try{
+                        const user =  USER.findByIdAndUpdate(id, {password,passwordConfirm})
+
+                        res.status(200).json({
+                            "message":"password updated"
+                        })
+                    }catch(err){
+                        res.status(401).json({"msg":err}); 
+
+                    }   
+                      }
+                 
+
             })
+         
+
+
+            
+
+            
+           
 
         }catch(err){
-            console.log(err)
             res.status(403).send({msg:err})
         
       

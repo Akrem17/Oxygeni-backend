@@ -6,7 +6,7 @@ var forgetPasswordController=require('../controller/forgetpasswordController')
 router.route('/')
 .post(forgetPasswordController.forgetpassword);
 
-router.route('/reset-password/:id/:token')
-.get(forgetPasswordController.resetpassword)
+router.route('/:id/:token')
+
 .post(forgetPasswordController.reset);
 module.exports = router;
