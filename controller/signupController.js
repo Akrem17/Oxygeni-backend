@@ -11,7 +11,7 @@ exports.signup = async (req, res) => {
 
         const emailverif = await USER.findOne({email});
 
-        if(emailverif){throw 'Email exists'}
+        if(emailverif){throw "L'email existe déjà"}
 
         if(password !=passwordConfirm) {throw "Le mot de passe n'est pas conforme "}
         //crypt password
